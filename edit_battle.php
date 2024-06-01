@@ -44,6 +44,8 @@ $conn->close();
                 <input type="text" id="side${sideCount}_commanders" name="commanders[]" required><br>
                 <label for="side${sideCount}_motives">Motywy strony ${sideCount}:</label>
                 <textarea id="side${sideCount}_motives" name="motives[]" required></textarea><br>
+                <label for="side${sideCount}_total_troops">Wystawione wojska strony ${sideCount}:</label>
+                <input type="number" id="side${sideCount}_total_troops" name="total_troops[]" required><br>
                 <label for="side${sideCount}_casualties">Polegli strony ${sideCount}:</label>
                 <input type="number" id="side${sideCount}_casualties" name="casualties[]" required><br>
                 <label for="side${sideCount}_wounded">Ranni strony ${sideCount}:</label>
@@ -51,7 +53,11 @@ $conn->close();
                 <label for="side${sideCount}_prisoners">Jeńcy strony ${sideCount}:</label>
                 <input type="number" id="side${sideCount}_prisoners" name="prisoners[]" required><br>
                 <label for="side${sideCount}_material_losses">Straty materialne strony ${sideCount}:</label>
-                <input type="number" id="side${sideCount}_material_losses" name="material_losses[]" required><br>
+                <textarea id="side${sideCount}_material_losses" name="material_losses[]" required></textarea><br>
+                <label for="side${sideCount}_troops">Jednostki wojenne strony ${sideCount}:</label>
+                <textarea id="side${sideCount}_troops" name="troops[]" required></textarea><br>
+                <label for="side${sideCount}_strategy">Strategia strony ${sideCount}:</label>
+                <textarea id="side${sideCount}_strategy" name="strategy[]" required></textarea><br>
                 <hr>
             `;
             container.appendChild(sideDiv);
@@ -88,6 +94,8 @@ $conn->close();
             <textarea id="causes" name="causes" required><?php echo htmlspecialchars($battle['causes']); ?></textarea><br>
             <label for="effects">Skutki:</label>
             <textarea id="effects" name="effects" required><?php echo htmlspecialchars($battle['effects']); ?></textarea><br>
+            <label for="key_moments">Skutki:</label>
+            <textarea id="key_moments" name="key_moments" required><?php echo htmlspecialchars($battle['key_moments']); ?></textarea><br>
             <hr>
             <div id="conflict-sides-container">
                 <?php foreach ($sides as $index => $side): ?>
@@ -99,6 +107,8 @@ $conn->close();
                         <input type="text" id="side<?php echo $index + 1; ?>_commanders" name="commanders[]" value="<?php echo htmlspecialchars($side['commanders']); ?>" required><br>
                         <label for="side<?php echo $index + 1; ?>_motives">Motywy strony <?php echo $index + 1; ?>:</label>
                         <textarea id="side<?php echo $index + 1; ?>_motives" name="motives[]" required><?php echo htmlspecialchars($side['motives']); ?></textarea><br>
+                        <label for="side<?php echo $index + 1; ?>_total_troops">Wystawione wojska strony <?php echo $index + 1; ?>:</label>
+                        <input type="number" id="side<?php echo $index + 1; ?>_total_troops" name="total_troops[]" value="<?php echo htmlspecialchars($side['total_troops']); ?>" required><br>
                         <label for="side<?php echo $index + 1; ?>_casualties">Polegli strony <?php echo $index + 1; ?>:</label>
                         <input type="number" id="side<?php echo $index + 1; ?>_casualties" name="casualties[]" value="<?php echo htmlspecialchars($side['casualties']); ?>" required><br>
                         <label for="side<?php echo $index + 1; ?>_wounded">Ranni strony <?php echo $index + 1; ?>:</label>
@@ -106,7 +116,11 @@ $conn->close();
                         <label for="side<?php echo $index + 1; ?>_prisoners">Jeńcy strony <?php echo $index + 1; ?>:</label>
                         <input type="number" id="side<?php echo $index + 1; ?>_prisoners" name="prisoners[]" value="<?php echo htmlspecialchars($side['prisoners']); ?>" required><br>
                         <label for="side<?php echo $index + 1; ?>_material_losses">Straty materialne strony <?php echo $index + 1; ?>:</label>
-                        <textarea id="side<?php echo $index + 1; ?>_material_losses" name="material_losses[]" value="<?php echo htmlspecialchars($side['material_losses']); ?>" required></textarea><br>
+                        <textarea id="side<?php echo $index + 1; ?>_material_losses" name="material_losses[]" required><?php echo htmlspecialchars($side['material_losses']); ?></textarea><br>
+                        <label for="side<?php echo $index + 1; ?>_troops">Jednostki wojenne strony <?php echo $index + 1; ?>:</label>
+                        <textarea id="side<?php echo $index + 1; ?>_troops" name="troops[]" required><?php echo htmlspecialchars($side['troops']); ?></textarea><br>
+                        <label for="side<?php echo $index + 1; ?>_strategy">Strategia strony <?php echo $index + 1; ?>:</label>
+                        <textarea id="side<?php echo $index + 1; ?>_strategy" name="strategy[]" required><?php echo htmlspecialchars($side['strategy']); ?></textarea><br>
                         <hr>
                     </div>
                 <?php endforeach; ?>

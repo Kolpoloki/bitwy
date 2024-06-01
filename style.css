@@ -105,3 +105,7 @@ select {
 nav ul li a:hover {
     color: #ffffff7e;
 }
+
+nav ul li a:active {
+    color: #fff;
+}
