@@ -94,7 +94,7 @@ $conn->close();
             <textarea id="causes" name="causes" required><?php echo htmlspecialchars($battle['causes']); ?></textarea><br>
             <label for="effects">Skutki:</label>
             <textarea id="effects" name="effects" required><?php echo htmlspecialchars($battle['effects']); ?></textarea><br>
-            <label for="key_moments">Skutki:</label>
+            <label for="key_moments">Kluczowe momenty:</label>
             <textarea id="key_moments" name="key_moments" required><?php echo htmlspecialchars($battle['key_moments']); ?></textarea><br>
             <hr>
             <div id="conflict-sides-container">

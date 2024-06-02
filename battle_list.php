@@ -44,8 +44,8 @@ $result = $conn->query($sql);
                 <td><?php echo htmlspecialchars($row['date']); ?></td>
                 <td><?php echo htmlspecialchars($row['location']); ?></td>
                 <td>
-                    <a class='button' href="edit_battle.php?id=<?php echo $row['id']; ?>">Edytuj</a>
-                    <a class='button' href="delete_battle.php?id=<?php echo $row['id']; ?>" onclick="return confirmDelete()">Usuń</a>
+                    <a class='button' href="edit_battle.php?id=<?php echo $row['id']; ?>" onclick="return confirm()">Edytuj</a>
+                    <a class='button' href="delete_battle.php?id=<?php echo $row['id']; ?>" onclick="return confirm()">Usuń</a>
                     <a class='button' href="battle_details.php?id=<?php echo $row['id']; ?>">Zobacz szczegóły</a>
                 </td>
             </tr>
@@ -59,7 +59,7 @@ $result = $conn->query($sql);
 </table>
     </main>
     <script>
-        function confirmDelete() {
+        function confirm() {
             var code = prompt("Proszę wprowadzić kod potwierdzenia(1234567890):");
             return code === "1234567890"
         }

@@ -35,10 +35,16 @@ $conn->close();
         .chart-container {
             width: 50%;
             margin: 20px auto;
+            text-align: center;
         }
         .chart-container canvas {
             display: block;
             margin: 0 auto;
+        }
+        .no-data {
+            margin: 20px;
+            font-size: 20px;
+            color: red;
         }
     </style>
 </head>
@@ -80,18 +86,22 @@ $conn->close();
         <div class="chart-container">
             <h3 style="font-size:30px;">Wystawione wojska</h3>
             <canvas id="troopsChart"></canvas>
+            <p id="troopsNoData" class="no-data" style="display: none;">Brak szczegółowych danych</p>
         </div>
         <div class="chart-container">
             <h3 style="font-size:30px;">Ranni</h3>
             <canvas id="woundedChart"></canvas>
+            <p id="woundedNoData" class="no-data" style="display: none;">Brak szczegółowych danych</p>
         </div>        
         <div class="chart-container">
             <h3 style="font-size:30px;">Poległych</h3>
             <canvas id="casualtiesChart"></canvas>
+            <p id="casualtiesNoData" class="no-data" style="display: none;">Brak szczegółowych danych</p>
         </div>
         <div class="chart-container">
             <h3 style="font-size:30px;">Jeńcy</h3>
             <canvas id="prisonersChart"></canvas>
+            <p id="prisonersNoData" class="no-data" style="display: none;">Brak szczegółowych danych</p>
         </div>
         <hr>
     </main>
@@ -105,102 +115,40 @@ $conn->close();
         const prisonersData = sides.map(side => side.prisoners);
         const troopsData = sides.map(side => side.total_troops);
 
-        const ctxWounded = document.getElementById('woundedChart').getContext('2d');
-        const ctxCasualties = document.getElementById('casualtiesChart').getContext('2d');
-        const ctxPrisoners = document.getElementById('prisonersChart').getContext('2d');
-        const ctxTroops = document.getElementById('troopsChart').getContext('2d');
-
-        new Chart(ctxWounded, {
-            type: 'pie',
-            data: {
-                labels: sideNames,
-                datasets: [{
-                    data: woundedData,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
+        function createChart(ctx, data, noDataId, label) {
+            if (data.every(val => val == 0)) {
+                document.getElementById(noDataId).style.display = 'block';
+                ctx.canvas.style.display = 'none';
+            } else {
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: sideNames,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                        }]
                     },
-                    title: {
-                        display: true,
-                        text: 'Ranni'
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: label
+                            }
+                        }
                     }
-                }
+                });
             }
-        });
+        }
 
-        new Chart(ctxCasualties, {
-            type: 'pie',
-            data: {
-                labels: sideNames,
-                datasets: [{
-                    data: casualtiesData,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Poległych'
-                    }
-                }
-            }
-        });
-
-        new Chart(ctxPrisoners, {
-            type: 'pie',
-            data: {
-                labels: sideNames,
-                datasets: [{
-                    data: prisonersData,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Jeńcy'
-                    }
-                }
-            }
-        });
-
-        new Chart(ctxTroops, {
-            type: 'pie',
-            data: {
-                labels: sideNames,
-                datasets: [{
-                    data: troopsData,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Wojska'
-                    }
-                }
-            }
-        });
+        createChart(document.getElementById('woundedChart').getContext('2d'), woundedData, 'woundedNoData', 'Ranni');
+        createChart(document.getElementById('casualtiesChart').getContext('2d'), casualtiesData, 'casualtiesNoData', 'Poległych');
+        createChart(document.getElementById('prisonersChart').getContext('2d'), prisonersData, 'prisonersNoData', 'Jeńcy');
+        createChart(document.getElementById('troopsChart').getContext('2d'), troopsData, 'troopsNoData', 'Wojska');
     </script>
 </body>
 </html>
