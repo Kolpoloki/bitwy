@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS quiz_results (
     correct_answers INT,
     total_questions INT,
     date_taken TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT `fk_quiz_id`
+    CONSTRAINT `fk_quiz_id_result`
     FOREIGN KEY (quiz_id) REFERENCES quizzes (id)
     ON DELETE CASCADE   
 );
